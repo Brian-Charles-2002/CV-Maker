@@ -1,0 +1,6 @@
+{
+  "name": "Veritas CV Studio",
+  "description": "Professional CV maker with curated executive templates, live document preview, drag-and-drop section customization, multi-page creation flow, PDF export, and 100% client-side privacy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
