@@ -43,8 +43,7 @@ export default function App() {
     } catch {
       // Fallback
     }
-    // Start with rich sample data so user immediately sees templates and functionality
-    return SAMPLE_CV;
+    return EMPTY_CV;
   });
 
   const [currentStep, setCurrentStep] = useState<WizardStepId>('personal');
