@@ -346,10 +346,11 @@ export default function App() {
         <button
           type="button"
           onClick={() => setIsFullPreviewOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-neutral-900 text-white text-xs font-bold rounded-full shadow-xl hover:bg-neutral-800 transition-colors"
+          aria-label="View CV preview"
+          title="View CV preview"
+          className="flex h-11 w-11 items-center justify-center bg-neutral-900 text-white rounded-full shadow-xl hover:bg-neutral-800 transition-colors"
         >
           <Eye className="w-4 h-4" />
-          <span>View CV ({cvData.design.template.replace('_', ' ')})</span>
         </button>
       </div>
 
