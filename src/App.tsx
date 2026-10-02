@@ -31,9 +31,16 @@ import {
 } from 'lucide-react';
 
 const STORAGE_KEY = 'veritas_cv_draft_session';
+const NAVIGATION_STORAGE_KEY = 'veritas_cv_navigation_session';
 
 export default function App() {
-  const [view, setView] = useState<'landing' | 'builder'>('landing');
+  const [view, setView] = useState<'landing' | 'builder'>(() => {
+    try {
+      return sessionStorage.getItem(NAVIGATION_STORAGE_KEY) === 'builder' ? 'builder' : 'landing';
+    } catch {
+      return 'landing';
+    }
+  });
   const [cvData, setCvData] = useState<CVData>(() => {
     try {
       const saved = sessionStorage.getItem(STORAGE_KEY);
@@ -46,7 +53,16 @@ export default function App() {
     return EMPTY_CV;
   });
 
-  const [currentStep, setCurrentStep] = useState<WizardStepId>('personal');
+  const [currentStep, setCurrentStep] = useState<WizardStepId>(() => {
+    try {
+      const savedStep = sessionStorage.getItem(`${NAVIGATION_STORAGE_KEY}_step`);
+      return WIZARD_STEPS.some((step) => step.id === savedStep)
+        ? (savedStep as WizardStepId)
+        : 'personal';
+    } catch {
+      return 'personal';
+    }
+  });
   const [isSplitPreviewOpen, setIsSplitPreviewOpen] = useState(true);
   const [isFullPreviewOpen, setIsFullPreviewOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
@@ -60,6 +76,15 @@ export default function App() {
       console.warn('Could not save draft to session storage', e);
     }
   }, [cvData]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(NAVIGATION_STORAGE_KEY, view);
+      sessionStorage.setItem(`${NAVIGATION_STORAGE_KEY}_step`, currentStep);
+    } catch (e) {
+      console.warn('Could not save navigation state to session storage', e);
+    }
+  }, [view, currentStep]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
